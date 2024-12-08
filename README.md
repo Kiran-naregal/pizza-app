@@ -37,7 +37,7 @@ A comprehensive pizza ordering web application built with React, featuring an in
 
 ```bash
 # Clone the repository
-git clone https://github.com/your-username/pizza-app.git
+git clone https://github.com/Kiran-naregal/pizza-app.git
 
 # Navigate to project directory
 cd pizza-app

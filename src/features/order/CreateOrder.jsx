@@ -31,7 +31,6 @@ function CreateOrder() {
     username,
     status: addressStatus,
     error: addressError,
-    position,
     address,
     phoneNumber,
   } = useSelector((state) => state.user);
