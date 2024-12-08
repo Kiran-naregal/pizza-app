@@ -8,7 +8,12 @@ import store from "../../store";
 import { clearCart, getTotalCartAmount } from "../cart/cartSlice";
 import { useState } from "react";
 import { formatCurrency } from "../../utils/helpers";
-import { fetchAddress } from "../user/userSlice";
+import {
+  fetchAddress,
+  updateAddress,
+  updateName,
+  updatePhoneNumber,
+} from "../user/userSlice";
 
 // https://uibakery.io/regex-library/phone-number
 const isValidPhone = (str) =>
@@ -28,6 +33,7 @@ function CreateOrder() {
     error: addressError,
     position,
     address,
+    phoneNumber,
   } = useSelector((state) => state.user);
   const isLoadingAdress = addressStatus === "loading";
   const amount = useSelector(getTotalCartAmount);
@@ -48,14 +54,22 @@ function CreateOrder() {
             name="customer"
             required
             className="input grow"
-            defaultValue={username}
+            value={username}
+            onChange={(e) => dispatch(updateName(e.target.value))}
           />
         </div>
 
         <div className="mb-5 flex flex-col gap-2 sm:flex-row sm:items-center">
           <label className="sm:basis-40">Phone number</label>
           <div className="grow">
-            <input type="tel" name="phone" required className="input w-full" />
+            <input
+              type="tel"
+              name="phone"
+              required
+              value={phoneNumber}
+              className="input w-full"
+              onChange={(e) => dispatch(updatePhoneNumber(e.target.value))}
+            />
             {formErrors?.phone && (
               <p className="mt-2 rounded-md bg-red-100 p-2 text-xs text-red-700">
                 {formErrors.phone}
@@ -70,12 +84,13 @@ function CreateOrder() {
             <input
               type="text"
               name="address"
-              defaultValue={address}
+              value={address}
               required
               className="input w-full"
+              onChange={(e) => dispatch(updateAddress(e.target.value))}
             />
             <span className="absolute right-1 top-1">
-              {!position.latitude && !position.longitude && !address && (
+              {!address && (
                 <Button
                   disabled={isLoadingAdress}
                   type="small"

@@ -5,21 +5,27 @@ import cartReducer from './features/cart/cartSlice';
 import { persistReducer, persistStore } from "redux-persist";
 
 
-const rootPersistConfig = {
-    key: 'root',
+const cartPersistConfig = {
+    key: 'cart',
     storage,
-    blacklist: ['user']
+};
+
+const userPersistConfig = {
+    key: 'user',
+    storage,
+    blacklist: ['status', 'error'],
 }
 
+const persistedUserReducer = persistReducer(userPersistConfig, userReducer);
+const persistedCartReducer = persistReducer(cartPersistConfig, cartReducer);
+
 const rootReducer = combineReducers({
-    user: userReducer,
-    cart: cartReducer,
+    user: persistedUserReducer,
+    cart: persistedCartReducer,
 })
 
-const persistedReducer = persistReducer(rootPersistConfig, rootReducer);
-
 const store = configureStore({
-    reducer: persistedReducer,
+    reducer: rootReducer,
     middleware: (getDefaultMiddleware) =>
         getDefaultMiddleware({
             serializableCheck: {
