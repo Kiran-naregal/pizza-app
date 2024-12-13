@@ -84,6 +84,7 @@ function MenuItem({ pizza, allIngredients }) {
                   defaultChecked={item.addIngredients.find(
                     (item) => item === ingredient.name,
                   )}
+                  id={`${ingredient.name}-${id}`}
                   type="checkbox"
                   onChange={(e) => {
                     e.target.checked
@@ -99,7 +100,9 @@ function MenuItem({ pizza, allIngredients }) {
                         );
                   }}
                 />
-                <label>{ingredient.name}</label>
+                <label htmlFor={`${ingredient.name}-${id}`}>
+                  {ingredient.name}
+                </label>
                 <span>({formatCurrency(ingredient.price)})</span>
               </div>
             ))}
@@ -110,6 +113,7 @@ function MenuItem({ pizza, allIngredients }) {
               <div className="flex gap-1 capitalize italic" key={ingredient}>
                 <input
                   type="checkbox"
+                  id={`${ingredient}-${id}`}
                   defaultChecked={item.removeIngredients.find(
                     (item) => item === ingredient,
                   )}
@@ -119,7 +123,7 @@ function MenuItem({ pizza, allIngredients }) {
                       : dispatch(addDefaultIngredient(id, ingredient))
                   }
                 />
-                <label>{ingredient}</label>
+                <label htmlFor={`${ingredient}-${id}`}>{ingredient}</label>
               </div>
             ))}
           </div>
